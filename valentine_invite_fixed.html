@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Invite 💖</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #8a2be2;
+            font-size: 2.5em;
+        }
+        #question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #4b0082;
+        }
+        .btn-container {
+            position: relative;
+            width: 300px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            position: absolute;
+        }
+        #yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+            left: 0;
+        }
+        #no-btn {
+            background-color: #808080;
+            color: white;
+            right: 0;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will you be my Valentine? 💘</h1>
+    <p id="question">Choose wisely...</p>
+    
+    <div class="btn-container">
+        <button id="yes-btn">Yes</button>
+        <button id="no-btn">No</button>
+    </div>
+
+    <p id="message"></p>
+
+    <script>
+        let clickCount = 0;
+        const noBtn = document.getElementById("no-btn");
+        const yesBtn = document.getElementById("yes-btn");
+        const message = document.getElementById("message");
+
+        const messages = [
+            "You clicked the wrong button! 😆",
+            "Are you sure? 🤔",
+            "Try again! 😂"
+        ];
+
+        yesBtn.addEventListener("click", function() {
+            message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
+        });
+
+        noBtn.addEventListener("click", function() {
+            if (clickCount < 3) {
+                // Move No button to a new position within container limits
+                const randomX = Math.random() * 180 - 90; 
+                const randomY = Math.random() * 50 - 25;
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+                // Show the playful message
+                message.innerText = messages[clickCount];
+
+                clickCount++;
+            } else if (clickCount === 3) {
+                // Change "No" button into "Yes" on the 4th click
+                noBtn.innerText = "Yes";
+                noBtn.style.backgroundColor = "#ff4d4d";
+                noBtn.style.transform = "none"; // Reset movement
+                message.innerText = "Looks like you had no choice! 😜";
+
+                // Make the new "Yes" button trigger the final message
+                noBtn.onclick = function() {
+                    message.innerText = "I knew you'd make the right choice! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
+                };
+            }
+        });
+    </script>
+
+</body>
+</html>
