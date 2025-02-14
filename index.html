@@ -63,20 +63,14 @@
             text-shadow: 2px 2px 5px #ff4d4d;
         }
         
-        /* Fireworks Effect */
-        .firework {
+        /* Fireworks Container */
+        #fireworks-container {
             position: fixed;
-            width: 5px;
-            height: 5px;
-            background-color: #8A2BE2; /* Violet */
-            border-radius: 50%;
-            opacity: 1;
-            animation: explode 1s linear forwards;
-        }
-
-        @keyframes explode {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Ensures buttons can still be clicked */
         }
     </style>
 </head>
@@ -95,6 +89,12 @@
     <!-- Background Music (Dropbox Direct Link) -->
     <audio id="bg-music" src="https://www.dropbox.com/scl/fi/ns8q25ohif3149gyl1z0r/Kusapiling.mp3?rlkey=ytq5m5tnrad8oycssugbzzlq2&st=7bclkf81&raw=1"></audio>
 
+    <!-- Fireworks Container -->
+    <div id="fireworks-container"></div>
+
+    <!-- Fireworks.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
+
     <script>
         let clickCount = 0;
         const noBtn = document.getElementById("no-btn");
@@ -108,28 +108,35 @@
             "Try again! 😂"
         ];
 
-        yesBtn.addEventListener("click", function(event) {
+        // Initialize Fireworks.js
+        const container = document.getElementById('fireworks-container');
+        const fireworks = new Fireworks.default(container, {
+            speed: 3,
+            acceleration: 1.05,
+            friction: 0.97,
+            gravity: 1.5,
+            particles: 200,  // More particles for bigger fireworks
+            trace: 4,
+            explosion: 8,
+            intensity: 60,
+            flickering: 70,
+            opacity: 0.8,
+            lineWidth: { min: 1, max: 4 },
+            hue: { min: 260, max: 280 } // Purple/violet fireworks
+        });
+
+        yesBtn.addEventListener("click", function() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
             // Start music at 1:09 (69 seconds)
             bgMusic.currentTime = 69;  
-            bgMusic.play().then(() => {
-                console.log("Music started at the chorus!");
-            }).catch(error => {
-                console.log("Autoplay blocked! Asking for user interaction.");
+            bgMusic.play().catch(() => {
                 alert("Tap the screen to start the music!");
             });
 
-            // Start non-stop fireworks for 10 seconds
-            let fireworksInterval = setInterval(() => {
-                createFirework(
-                    Math.random() * window.innerWidth, 
-                    Math.random() * window.innerHeight
-                );
-            }, 100);
-
-            // Stop fireworks after 10 seconds
-            setTimeout(() => clearInterval(fireworksInterval), 10000);
+            // Start fireworks for 10 seconds
+            fireworks.start();
+            setTimeout(() => fireworks.stop(), 10000);
         });
 
         noBtn.addEventListener("click", function() {
@@ -148,48 +155,21 @@
                 message.innerText = "Looks like you had no choice! 😜";
 
                 // Make the new "Yes" button trigger the final message
-                noBtn.onclick = function(event) {
+                noBtn.onclick = function() {
                     message.innerText = "I knew you'd make the right choice! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
                     // Start music at 1:09 (69 seconds)
                     bgMusic.currentTime = 69;  
-                    bgMusic.play().then(() => {
-                        console.log("Music started at the chorus!");
-                    }).catch(error => {
-                        console.log("Autoplay blocked! Asking for user interaction.");
+                    bgMusic.play().catch(() => {
                         alert("Tap the screen to start the music!");
                     });
 
-                    // Start non-stop fireworks for 10 seconds
-                    let fireworksInterval = setInterval(() => {
-                        createFirework(
-                            Math.random() * window.innerWidth, 
-                            Math.random() * window.innerHeight
-                        );
-                    }, 100);
-
-                    // Stop fireworks after 10 seconds
-                    setTimeout(() => clearInterval(fireworksInterval), 10000);
+                    // Start fireworks for 10 seconds
+                    fireworks.start();
+                    setTimeout(() => fireworks.stop(), 10000);
                 };
             }
         });
-
-        function createFirework(x, y) {
-            for (let i = 0; i < 20; i++) {
-                const firework = document.createElement("div");
-                firework.classList.add("firework");
-                firework.style.left = `${x}px`;
-                firework.style.top = `${y}px`;
-
-                let angle = Math.random() * 2 * Math.PI; // Random angle
-                let distance = Math.random() * 100; // Random spread
-
-                firework.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-                document.body.appendChild(firework);
-
-                setTimeout(() => firework.remove(), 1000);
-            }
-        }
     </script>
 
 </body>
