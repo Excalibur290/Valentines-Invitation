@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Invite 💖</title>
+    <title>Valentine's Event 💖</title>
     <style>
         body {
             text-align: center;
@@ -16,19 +16,23 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            transition: background 10s ease-in-out; /* Ultra-smooth transition */
+            transition: background 10s ease-in-out;
         }
-        h1 {
-            color: #ffffff;
-            font-size: 2.8em;
-            text-shadow: 2px 2px 5px #ff4d4d;
+
+        /* Glowing Neon Time Effect */
+        #event-time {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffd700; /* Gold color */
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700, 0 0 30px #ffa700;
+            animation: glow 1.5s infinite alternate ease-in-out;
         }
-        #question {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #ffffff;
-            text-shadow: 1px 1px 3px #ff4d4d;
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700, 0 0 30px #ffa700; }
+            100% { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffb700, 0 0 40px #ffa700; }
         }
+
         .btn-container {
             position: relative;
             width: 300px;
@@ -36,6 +40,7 @@
             display: flex;
             justify-content: center;
         }
+
         button {
             padding: 12px 25px;
             font-size: 1.2em;
@@ -46,16 +51,19 @@
             position: absolute;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
+
         #yes-btn {
             background-color: #ff4d4d;
             color: white;
             left: 50px;
         }
+
         #no-btn {
             background-color: #808080;
             color: white;
             right: 50px;
         }
+
         #message {
             margin-top: 20px;
             font-size: 1.5em;
@@ -64,51 +72,12 @@
             text-shadow: 2px 2px 5px #ff4d4d;
         }
 
-        /* Beating Heart Animation */
-        .heart {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 80px;
-            color: #ff4d4d;
-            animation: heartbeat 1.5s infinite ease-in-out;
-        }
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        /* Stars for Night Sky */
-        .star {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkle 3s infinite alternate ease-in-out;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.3); }
-        }
-
-        /* Fireworks Container */
-        #fireworks-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Will you be my Valentine? 💘</h1>
-    <p id="question">Choose wisely...</p> <!-- This text will disappear when "Yes" is clicked -->
+    <!-- Glowing Event Time -->
+    <h1 id="event-time">Time: 7:00 PM</h1>
     
     <div class="btn-container">
         <button id="yes-btn">Yes</button>
@@ -117,105 +86,18 @@
 
     <p id="message"></p>
 
-    <!-- Background Music (Looping) -->
-    <audio id="bg-music" src="https://www.dropbox.com/scl/fi/ns8q25ohif3149gyl1z0r/Kusapiling.mp3?rlkey=ytq5m5tnrad8oycssugbzzlq2&st=7bclkf81&raw=1" loop></audio>
-
-    <!-- Fireworks Container -->
-    <div id="fireworks-container"></div>
-
-    <!-- Fireworks.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
-
     <script>
-        let clickCount = 0;
-        const noBtn = document.getElementById("no-btn");
         const yesBtn = document.getElementById("yes-btn");
+        const noBtn = document.getElementById("no-btn");
         const message = document.getElementById("message");
-        const bgMusic = document.getElementById("bg-music");
-        const questionText = document.getElementById("question"); // Grabs "Choose wisely..." text
 
-        // Initialize Fireworks.js for endless fireworks
-        const container = document.getElementById('fireworks-container');
-        const fireworks = new Fireworks.default(container, {
-            speed: 1.5, /* Slower explosion speed */
-            acceleration: 1.01,
-            friction: 0.99,
-            gravity: 1,
-            particles: 180,  
-            trace: 4,
-            explosion: 12, /* Larger and slower explosion */
-            intensity: 50, /* Less frequent fireworks for elegance */
-            flickering: 70,
-            opacity: 0.9,
-            lineWidth: { min: 2, max: 5 },
-            hue: { min: 260, max: 280 }
-        });
+        yesBtn.addEventListener("click", function() {
+            message.innerText = "I knew you wouldn’t think otherwise! ❤️ See you at 7:00 PM! 😉";
 
-        function startCelebration() {
-            message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
-
-            // Hide "Choose wisely..." text
-            questionText.style.display = "none";
-
-            // Start music at 1:09 (69 seconds) and loop it
-            bgMusic.currentTime = 69;  
-            bgMusic.play().catch(() => {
-                alert("Tap the screen to start the music!");
-            });
-
-            // Smoothly transition to night sky
-            document.body.style.transition = "background 10s ease-in-out";
-            document.body.style.background = "linear-gradient(to top, #0f2027, #203a43, #2c5364)"; 
-
-            // Start fireworks endlessly
-            fireworks.start();
-
-            // Merge buttons into a beating heart
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = "❤️";
-            document.body.appendChild(heart);
-
-            // Remove both buttons
+            // Remove both buttons after clicking "Yes"
             yesBtn.style.display = "none";
             noBtn.style.display = "none";
-
-            // Add stars
-            for (let i = 0; i < 50; i++) {
-                createStar();
-            }
-        }
-
-        yesBtn.addEventListener("click", startCelebration);
-
-        noBtn.addEventListener("click", function() {
-            if (clickCount < 3) {
-                const randomX = Math.random() * 180 - 90; 
-                const randomY = Math.random() * 50 - 25;
-                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-
-                message.innerText = ["You clicked the wrong button! 😆", "Are you sure? 🤔", "Try again! 😂"][clickCount];
-
-                clickCount++;
-            } else {
-                noBtn.innerText = "Yes";
-                noBtn.style.backgroundColor = "#ff4d4d";
-                noBtn.style.transform = "none"; 
-                message.innerText = "Looks like you had no choice! 😜";
-
-                // Now the "No" button (turned into "Yes") will trigger the celebration
-                noBtn.onclick = startCelebration;
-            }
         });
-
-        function createStar() {
-            const star = document.createElement("div");
-            star.classList.add("star");
-            star.style.left = Math.random() * 100 + "vw";
-            star.style.top = Math.random() * 100 + "vh";
-            star.style.animationDelay = Math.random() * 2 + "s";
-            document.body.appendChild(star);
-        }
     </script>
 
 </body>
