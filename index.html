@@ -16,7 +16,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            transition: background 8s ease-in-out; /* Smoother transition */
+            transition: background 10s ease-in-out; /* Ultra-smooth transition */
         }
         h1 {
             color: #ffffff;
@@ -71,7 +71,7 @@
             transform: translateY(-50%);
             font-size: 80px;
             color: #ff4d4d;
-            animation: heartbeat 1s infinite ease-in-out;
+            animation: heartbeat 1.5s infinite ease-in-out;
         }
         @keyframes heartbeat {
             0% { transform: scale(1); }
@@ -87,7 +87,7 @@
             background: white;
             border-radius: 50%;
             opacity: 0;
-            animation: twinkle 2s infinite alternate ease-in-out;
+            animation: twinkle 3s infinite alternate ease-in-out;
         }
         @keyframes twinkle {
             0% { opacity: 0.3; transform: scale(1); }
@@ -101,7 +101,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none; /* Ensures buttons can still be clicked */
+            pointer-events: none;
         }
     </style>
 </head>
@@ -136,18 +136,18 @@
         // Initialize Fireworks.js for endless fireworks
         const container = document.getElementById('fireworks-container');
         const fireworks = new Fireworks.default(container, {
-            speed: 2,
-            acceleration: 1.02,
-            friction: 0.98,
-            gravity: 1.2,
-            particles: 250,  
-            trace: 5,
-            explosion: 10,
-            intensity: 80,
-            flickering: 90,
+            speed: 1.5, /* Slower explosion speed */
+            acceleration: 1.01,
+            friction: 0.99,
+            gravity: 1,
+            particles: 180,  
+            trace: 4,
+            explosion: 12, /* Larger and slower explosion */
+            intensity: 50, /* Less frequent fireworks for elegance */
+            flickering: 70,
             opacity: 0.9,
             lineWidth: { min: 2, max: 5 },
-            hue: { min: 260, max: 280 } 
+            hue: { min: 260, max: 280 }
         });
 
         function startCelebration() {
@@ -160,7 +160,7 @@
             });
 
             // Smoothly transition to night sky
-            document.body.style.transition = "background 8s ease-in-out";
+            document.body.style.transition = "background 10s ease-in-out";
             document.body.style.background = "linear-gradient(to top, #0f2027, #203a43, #2c5364)"; 
 
             // Start fireworks endlessly
