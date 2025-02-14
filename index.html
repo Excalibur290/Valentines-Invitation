@@ -86,8 +86,8 @@
 
     <p id="message"></p>
 
-    <!-- Background Music (Hidden) -->
-    <audio id="bg-music" src="https://docs.google.com/uc?export=download&id=1ksVRL9ipqYLqsXWcqEkBsDtHC_IFOsAE"></audio>
+    <!-- Background Music (Dropbox Direct Link) -->
+    <audio id="bg-music" src="https://www.dropbox.com/scl/fi/ns8q25ohif3149gyl1z0r/Kusapiling.mp3?rlkey=ytq5m5tnrad8oycssugbzzlq2&st=7bclkf81&raw=1"></audio>
 
     <script>
         let clickCount = 0;
@@ -105,17 +105,13 @@
         yesBtn.addEventListener("click", function() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
-            // Play background music with a fade-in effect
-            bgMusic.volume = 0;
-            bgMusic.play();
-
-            let fadeIn = setInterval(() => {
-                if (bgMusic.volume < 1) {
-                    bgMusic.volume += 0.1;
-                } else {
-                    clearInterval(fadeIn);
-                }
-            }, 300);
+            // Play background music with error handling
+            bgMusic.play().then(() => {
+                console.log("Music started!");
+            }).catch(error => {
+                console.log("Autoplay blocked! Asking for user interaction.");
+                alert("Tap the screen to start the music!");
+            });
         });
 
         noBtn.addEventListener("click", function() {
@@ -137,17 +133,13 @@
                 noBtn.onclick = function() {
                     message.innerText = "I knew you'd make the right choice! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
-                    // Play background music with a fade-in effect
-                    bgMusic.volume = 0;
-                    bgMusic.play();
-
-                    let fadeIn = setInterval(() => {
-                        if (bgMusic.volume < 1) {
-                            bgMusic.volume += 0.1;
-                        } else {
-                            clearInterval(fadeIn);
-                        }
-                    }, 300);
+                    // Play background music with user interaction
+                    bgMusic.play().then(() => {
+                        console.log("Music started!");
+                    }).catch(error => {
+                        console.log("Autoplay blocked! Asking for user interaction.");
+                        alert("Tap the screen to start the music!");
+                    });
                 };
             }
         });
