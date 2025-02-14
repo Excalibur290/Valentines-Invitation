@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Event 💖</title>
+    <title>Valentine's Invite 💖</title>
     <style>
         body {
             text-align: center;
@@ -16,31 +16,19 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            transition: background 10s ease-in-out;
+            transition: background 10s ease-in-out; /* Ultra-smooth transition */
         }
-
-        /* Default Header */
-        #event-header {
-            font-size: 2.8em;
+        h1 {
             color: #ffffff;
+            font-size: 2.8em;
             text-shadow: 2px 2px 5px #ff4d4d;
-            transition: opacity 1s ease-in-out;
         }
-
-        /* Glowing Neon Time Effect */
-        .glowing-time {
-            font-size: 3em;
-            font-weight: bold;
-            color: #ffd700; /* Gold color */
-            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700, 0 0 30px #ffa700;
-            animation: glow 1.5s infinite alternate ease-in-out;
+        #question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px #ff4d4d;
         }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700, 0 0 30px #ffa700; }
-            100% { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffb700, 0 0 40px #ffa700; }
-        }
-
         .btn-container {
             position: relative;
             width: 300px;
@@ -48,7 +36,6 @@
             display: flex;
             justify-content: center;
         }
-
         button {
             padding: 12px 25px;
             font-size: 1.2em;
@@ -59,19 +46,16 @@
             position: absolute;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
-
         #yes-btn {
             background-color: #ff4d4d;
             color: white;
             left: 50px;
         }
-
         #no-btn {
             background-color: #808080;
             color: white;
             right: 50px;
         }
-
         #message {
             margin-top: 20px;
             font-size: 1.5em;
@@ -89,7 +73,6 @@
             color: #ff4d4d;
             animation: heartbeat 1.5s infinite ease-in-out;
         }
-
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -124,9 +107,8 @@
 </head>
 <body>
 
-    <!-- Default Text -->
-    <h1 id="event-header">Will you be my Valentine? 💘</h1>
-    <p id="question">Choose wisely...</p> <!-- Will disappear when clicking "Yes" -->
+    <h1>Will you be my Valentine? 💘</h1>
+    <p id="question">Choose wisely...</p> <!-- This text will disappear when "Yes" is clicked -->
     
     <div class="btn-container">
         <button id="yes-btn">Yes</button>
@@ -148,9 +130,9 @@
         let clickCount = 0;
         const noBtn = document.getElementById("no-btn");
         const yesBtn = document.getElementById("yes-btn");
-        const eventHeader = document.getElementById("event-header");
         const message = document.getElementById("message");
-        const questionText = document.getElementById("question");
+        const bgMusic = document.getElementById("bg-music");
+        const questionText = document.getElementById("question"); // Grabs "Choose wisely..." text
 
         // Initialize Fireworks.js for endless fireworks
         const container = document.getElementById('fireworks-container');
@@ -162,37 +144,78 @@
             particles: 180,  
             trace: 4,
             explosion: 12, /* Larger and slower explosion */
-            intensity: 50,
+            intensity: 50, /* Less frequent fireworks for elegance */
             flickering: 70,
             opacity: 0.9,
             lineWidth: { min: 2, max: 5 },
             hue: { min: 260, max: 280 }
         });
 
-        yesBtn.addEventListener("click", function() {
-            message.innerText = "I knew you wouldn’t think otherwise! ❤️ See you at 7:00 PM! 😉";
+        function startCelebration() {
+            message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
             // Hide "Choose wisely..." text
             questionText.style.display = "none";
 
-            // Change text to "Time: 7:00 PM"
-            eventHeader.innerText = "Time: 7:00 PM";
-            eventHeader.classList.add("glowing-time");
+            // Start music at 1:09 (69 seconds) and loop it
+            bgMusic.currentTime = 69;  
+            bgMusic.play().catch(() => {
+                alert("Tap the screen to start the music!");
+            });
 
-            // Start fireworks & music
+            // Smoothly transition to night sky
+            document.body.style.transition = "background 10s ease-in-out";
+            document.body.style.background = "linear-gradient(to top, #0f2027, #203a43, #2c5364)"; 
+
+            // Start fireworks endlessly
             fireworks.start();
-            bgMusic.currentTime = 69;
-            bgMusic.play();
 
-            // Morph Yes into a heart & hide buttons
+            // Merge buttons into a beating heart
             const heart = document.createElement("div");
             heart.classList.add("heart");
             heart.innerHTML = "❤️";
             document.body.appendChild(heart);
 
+            // Remove both buttons
             yesBtn.style.display = "none";
             noBtn.style.display = "none";
+
+            // Add stars
+            for (let i = 0; i < 50; i++) {
+                createStar();
+            }
+        }
+
+        yesBtn.addEventListener("click", startCelebration);
+
+        noBtn.addEventListener("click", function() {
+            if (clickCount < 3) {
+                const randomX = Math.random() * 180 - 90; 
+                const randomY = Math.random() * 50 - 25;
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+                message.innerText = ["You clicked the wrong button! 😆", "Are you sure? 🤔", "Try again! 😂"][clickCount];
+
+                clickCount++;
+            } else {
+                noBtn.innerText = "Yes";
+                noBtn.style.backgroundColor = "#ff4d4d";
+                noBtn.style.transform = "none"; 
+                message.innerText = "Looks like you had no choice! 😜";
+
+                // Now the "No" button (turned into "Yes") will trigger the celebration
+                noBtn.onclick = startCelebration;
+            }
         });
+
+        function createStar() {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.animationDelay = Math.random() * 2 + "s";
+            document.body.appendChild(star);
+        }
     </script>
 
 </body>
