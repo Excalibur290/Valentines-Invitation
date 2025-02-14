@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Invite</title>
+    <title>Valentine's Invite 💖</title>
     <style>
         body {
-            background-color: #ffccff;
+            background: linear-gradient(to right, #ffccff, #dda0dd);
             text-align: center;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
@@ -14,6 +14,7 @@
         }
         h1 {
             color: #a100a1;
+            margin-top: 50px;
         }
         .container {
             position: relative;
@@ -21,16 +22,17 @@
         }
         .button {
             font-size: 20px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             cursor: pointer;
             position: absolute;
             transition: 0.3s;
+            border-radius: 20px;
         }
         .yes {
             background-color: #ff69b4;
             color: white;
-            left: 35%;
+            left: 40%;
         }
         .no {
             background-color: #9370DB;
@@ -39,14 +41,6 @@
         }
         .gif-container {
             margin-top: 20px;
-        }
-        #hearts {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
         }
         @keyframes floatHearts {
             from {
@@ -74,8 +68,8 @@
     </div>
     <p id="message"></p>
     <div class="gif-container" id="gif-container"></div>
-    
-    <audio id="background-music" autoplay loop>
+
+    <audio id="background-music" autoplay loop hidden>
         <source src="https://docs.google.com/uc?export=download&id=1ksVRL9ipqYLqsXWcqEkBsDtHC_IFOsAE" type="audio/mpeg">
     </audio>
 
@@ -83,9 +77,8 @@
         let clickCount = 0;
 
         function showYesMessage() {
-            document.getElementById("message").innerText = "I knew you would say YES! 😘";
+            document.getElementById("message").innerText = "I knew you couldn't resist! 😘";
             document.getElementById("gif-container").innerHTML = '<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" width="200">';
-            confettiExplosion();
             createFloatingHearts();
             setTimeout(() => {
                 document.getElementById("message").innerText += "\nLet's eat later and go somewhere tomorrow!";
@@ -97,7 +90,7 @@
             let noButton = document.querySelector(".no");
 
             if (clickCount < 3) {
-                noButton.style.left = Math.random() * 50 + "%";
+                noButton.style.left = Math.random() * 60 + "%";
                 noButton.style.top = Math.random() * 50 + "vh";
                 document.getElementById("message").innerText = "Oops! Wrong button 😆";
             } else {
@@ -105,14 +98,6 @@
                 noButton.setAttribute("onclick", "showYesMessage()");
                 document.getElementById("message").innerText = "No more escape! 😜";
             }
-        }
-
-        function confettiExplosion() {
-            let canvas = document.createElement("canvas");
-            document.body.appendChild(canvas);
-            let confettiSettings = { target: canvas };
-            let confetti = new ConfettiGenerator(confettiSettings);
-            confetti.render();
         }
 
         function createFloatingHearts() {
@@ -129,6 +114,5 @@
             }
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
 </body>
 </html>
