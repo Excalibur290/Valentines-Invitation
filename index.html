@@ -62,7 +62,6 @@
             font-weight: bold;
             text-shadow: 2px 2px 5px #ff4d4d;
         }
-        /* Floating hearts animation */
         .heart {
             position: absolute;
             color: #ff4d4d;
@@ -87,11 +86,15 @@
 
     <p id="message"></p>
 
+    <!-- Background Music (Hidden) -->
+    <audio id="bg-music" src="https://docs.google.com/uc?export=download&id=1ksVRL9ipqYLqsXWcqEkBsDtHC_IFOsAE"></audio>
+
     <script>
         let clickCount = 0;
         const noBtn = document.getElementById("no-btn");
         const yesBtn = document.getElementById("yes-btn");
         const message = document.getElementById("message");
+        const bgMusic = document.getElementById("bg-music");
 
         const messages = [
             "You clicked the wrong button! 😆",
@@ -101,34 +104,54 @@
 
         yesBtn.addEventListener("click", function() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
+
+            // Play background music with a fade-in effect
+            bgMusic.volume = 0;
+            bgMusic.play();
+
+            let fadeIn = setInterval(() => {
+                if (bgMusic.volume < 1) {
+                    bgMusic.volume += 0.1;
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 300);
         });
 
         noBtn.addEventListener("click", function() {
             if (clickCount < 3) {
-                // Move No button to a new position within container limits
                 const randomX = Math.random() * 180 - 90; 
                 const randomY = Math.random() * 50 - 25;
                 noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 
-                // Show the playful message
                 message.innerText = messages[clickCount];
 
                 clickCount++;
             } else if (clickCount === 3) {
-                // Change "No" button into "Yes" on the 4th click
                 noBtn.innerText = "Yes";
                 noBtn.style.backgroundColor = "#ff4d4d";
-                noBtn.style.transform = "none"; // Reset movement
+                noBtn.style.transform = "none"; 
                 message.innerText = "Looks like you had no choice! 😜";
 
                 // Make the new "Yes" button trigger the final message
                 noBtn.onclick = function() {
                     message.innerText = "I knew you'd make the right choice! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
+
+                    // Play background music with a fade-in effect
+                    bgMusic.volume = 0;
+                    bgMusic.play();
+
+                    let fadeIn = setInterval(() => {
+                        if (bgMusic.volume < 1) {
+                            bgMusic.volume += 0.1;
+                        } else {
+                            clearInterval(fadeIn);
+                        }
+                    }, 300);
                 };
             }
         });
 
-        // Function to create floating hearts
         function createHeart() {
             const heart = document.createElement("div");
             heart.classList.add("heart");
@@ -139,8 +162,7 @@
             setTimeout(() => { heart.remove(); }, 4000);
         }
 
-        setInterval(createHeart, 500); // Create hearts every 500ms
-
+        setInterval(createHeart, 500);
     </script>
 
 </body>
