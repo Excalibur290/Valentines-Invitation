@@ -150,7 +150,7 @@
             hue: { min: 260, max: 280 } 
         });
 
-        yesBtn.addEventListener("click", function() {
+        function startCelebration() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
             // Start music at 1:09 (69 seconds) and loop it
@@ -180,7 +180,9 @@
             for (let i = 0; i < 50; i++) {
                 createStar();
             }
-        });
+        }
+
+        yesBtn.addEventListener("click", startCelebration);
 
         noBtn.addEventListener("click", function() {
             if (clickCount < 3) {
@@ -196,7 +198,9 @@
                 noBtn.style.backgroundColor = "#ff4d4d";
                 noBtn.style.transform = "none"; 
                 message.innerText = "Looks like you had no choice! 😜";
-                noBtn.onclick = yesBtn.onclick;
+
+                // Now the "No" button (turned into "Yes") will trigger the celebration
+                noBtn.onclick = startCelebration;
             }
         });
 
