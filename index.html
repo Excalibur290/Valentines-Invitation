@@ -108,7 +108,7 @@
 <body>
 
     <h1>Will you be my Valentine? 💘</h1>
-    <p id="question">Choose wisely...</p>
+    <p id="question">Choose wisely...</p> <!-- This text will disappear when "Yes" is clicked -->
     
     <div class="btn-container">
         <button id="yes-btn">Yes</button>
@@ -132,6 +132,7 @@
         const yesBtn = document.getElementById("yes-btn");
         const message = document.getElementById("message");
         const bgMusic = document.getElementById("bg-music");
+        const questionText = document.getElementById("question"); // Grabs "Choose wisely..." text
 
         // Initialize Fireworks.js for endless fireworks
         const container = document.getElementById('fireworks-container');
@@ -152,6 +153,9 @@
 
         function startCelebration() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
+
+            // Hide "Choose wisely..." text
+            questionText.style.display = "none";
 
             // Start music at 1:09 (69 seconds) and loop it
             bgMusic.currentTime = 69;  
