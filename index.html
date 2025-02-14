@@ -105,9 +105,10 @@
         yesBtn.addEventListener("click", function() {
             message.innerText = "I knew you wouldn’t think otherwise! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
-            // Play background music with error handling
+            // Start music at 1:09 (69 seconds)
+            bgMusic.currentTime = 69;  
             bgMusic.play().then(() => {
-                console.log("Music started!");
+                console.log("Music started at the chorus!");
             }).catch(error => {
                 console.log("Autoplay blocked! Asking for user interaction.");
                 alert("Tap the screen to start the music!");
@@ -133,9 +134,10 @@
                 noBtn.onclick = function() {
                     message.innerText = "I knew you'd make the right choice! ❤️ Let's eat later, and we’ll go somewhere tomorrow! 😉";
 
-                    // Play background music with user interaction
+                    // Start music at 1:09 (69 seconds)
+                    bgMusic.currentTime = 69;  
                     bgMusic.play().then(() => {
-                        console.log("Music started!");
+                        console.log("Music started at the chorus!");
                     }).catch(error => {
                         console.log("Autoplay blocked! Asking for user interaction.");
                         alert("Tap the screen to start the music!");
