@@ -72,12 +72,12 @@
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-100vh); opacity: 0; }
         }
-        /* Fireworks animation */
+        /* Violet Fireworks Animation */
         .firework {
             position: fixed;
             width: 10px;
             height: 10px;
-            background: yellow;
+            background: #8A2BE2; /* Violet */
             border-radius: 50%;
             animation: explode 1s ease-out forwards;
         }
@@ -127,10 +127,18 @@
                 alert("Tap the screen to start the music!");
             });
 
-            // Trigger fireworks
-            for (let i = 0; i < 5; i++) {
-                createFirework(event.clientX + Math.random() * 100 - 50, event.clientY + Math.random() * 100 - 50);
-            }
+            // Start non-stop fireworks for 10 seconds
+            let fireworksInterval = setInterval(() => {
+                for (let i = 0; i < 5; i++) {
+                    createFirework(
+                        Math.random() * window.innerWidth, 
+                        Math.random() * window.innerHeight
+                    );
+                }
+            }, 300);
+
+            // Stop fireworks after 10 seconds
+            setTimeout(() => clearInterval(fireworksInterval), 10000);
         });
 
         noBtn.addEventListener("click", function() {
@@ -161,10 +169,18 @@
                         alert("Tap the screen to start the music!");
                     });
 
-                    // Trigger fireworks
-                    for (let i = 0; i < 5; i++) {
-                        createFirework(event.clientX + Math.random() * 100 - 50, event.clientY + Math.random() * 100 - 50);
-                    }
+                    // Start non-stop fireworks for 10 seconds
+                    let fireworksInterval = setInterval(() => {
+                        for (let i = 0; i < 5; i++) {
+                            createFirework(
+                                Math.random() * window.innerWidth, 
+                                Math.random() * window.innerHeight
+                            );
+                        }
+                    }, 300);
+
+                    // Stop fireworks after 10 seconds
+                    setTimeout(() => clearInterval(fireworksInterval), 10000);
                 };
             }
         });
